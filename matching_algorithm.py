@@ -4,7 +4,7 @@ from fuzzywuzzy import fuzz
 def dictionary_matching(top1):
     str_list = {
         "Mouth": 'D021', "House": 'O001', "Man and his occupation": 'A001',
-        "God,King": 'A040', "Soker (The god)": 'O004 V031 D021 A040',
+        "King": 'A040', "Soker (The god)": 'O004 V031 D021 A040',
         "Sun": 'N005', "Day": 'O004 D021 G001 N005',
         "Motion": 'D054', "Send": 'O004 G001 D058 D054',
         "Small bird used for bad,weak, or little things": 'G037', "Bad,evil": 'D058 T035 G037A N035',
@@ -42,12 +42,19 @@ def dictionary_matching(top1):
         "Official":'A021 D021 S029',"Courtier":'A021 X001 V001 W024 N035 V007',"Friend":'A021 S029 G017 T034 N035 AA001',"Statue":'A021 U033 D033 N035',
         "Courtiers":'I002 A001 Z002 A021 X001 V001 W024 N035 V007',
     }
-    x = "basma"
     
-    match_ratios = process.extract(top1, str_list, scorer=fuzz.token_sort_ratio)
-    print(match_ratios)
+    # match_ratios = process.extract(top1, str_list, scorer=fuzz.token_sort_ratio)
+    # print(match_ratios)
 
     best_match = process.extractOne(top1, str_list, scorer=fuzz.token_sort_ratio)
-    print(best_match)
+    # print(best_match)
 
-    return best_match
+    key_list=list(str_list.keys())
+    val_list=list(str_list.values())
+    ind=val_list.index(top1)
+    key_list[ind]
+
+    # print(key_list[ind])
+    return key_list[ind]
+
+
