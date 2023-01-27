@@ -41,12 +41,13 @@ def dictionary_matching(top1):
         "Well to do person, King of the birds":'I002 Z002 G039 Z003',"Throat":'I002 Z002 X001 F051B I001',"Garrulous, Chattering":'I002 Z002 P008 G043 A002',
         "Official":'A021 D021 S029',"Courtier":'A021 X001 V001 W024 N035 V007',"Friend":'A021 S029 G017 T034 N035 AA001',"Statue":'A021 U033 D033 N035',
         "Courtiers":'I002 A001 Z002 A021 X001 V001 W024 N035 V007',
+        "Herdsman":'A024 G043 D040',"Combat":'A024 N035 Z004 D021 D002 Z001',"Ship part":'A024 Z007 M017 K001 K001 N035 Z007 Z003A'
     }
     
     # match_ratios = process.extract(top1, str_list, scorer=fuzz.token_sort_ratio)
     # print(match_ratios)
 
-    best_match = process.extractOne(top1, str_list, scorer=fuzz.token_sort_ratio)
+    # best_match = process.extractOne(top1, str_list, scorer=fuzz.token_sort_ratio)
     # print(best_match)
 
     key_list=list(str_list.keys())
