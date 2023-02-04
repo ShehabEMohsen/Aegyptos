@@ -23,11 +23,11 @@ def dictionary_matching(top1):
         "Record royal titulary": 'G043 N035 D046 D066', "Write": 'S029 D066 F046A',
         "Serpent": 'V028 G001 I009 G043 I014', "Snake": 'I010 D046 X001 I009 I014',
         "king of Upper Egypt": 'M023 X001 N035 ', "king of Upper Egypt": 'M023 X001 ', "king of Upper Egypt": 'M023',
-        "king of Upper and Lower Egypt": 'M023 X001 X001 L002',"Priest": 'D060 N035A A001', "God’s father": 'T007A X001 ', "God’s father": 'T007A X001 I009',
+        "king of Upper and Lower Egypt": 'M023 X001 X001 L002',"Priest": 'D060 N035A A001', "God's father": 'T007A X001 ', "God's father": 'T007A X001 I009',
         "Lector priest": 'V028 W005 D058', "General-in-chief": 'G017 Z015 D021 A011 Z003 D021 G037A', "Soldier of the town regment": 'S034 O049 N035',
-        "Governor, mayor of the town": 'F004 D036 A003', "Reporter,Herald": 'F025 G017',  "King’s adviser, Royal intimate": 'M023 D021 AA001 Y001', "King’s adviser, Royal intimate": 'M024',
+        "Governor, mayor of the town": 'F004 D036 A003', "Reporter,Herald": 'F025 G017',  "King's adviser, Royal intimate": 'M023 D021 AA001 Y001', "King's adviser, Royal intimate": 'M024',
         "Follower of the palace": 'T018 G037A O001 T001 O001',
-        "Keeper of the royal diadem": 'A048 F035 X001 F004', "Chamberlain": 'W017 G017', "King’s seal-bearer": 'L002 X001 S019', "Sole companion": 'S029 S034 X001 T021 Z001',
+        "Keeper of the royal diadem": 'A048 F035 X001 F004', "Chamberlain": 'W017 G017', "King's seal-bearer": 'L002 X001 S019', "Sole companion": 'S029 S034 X001 T021 Z001',
         "Anubis": 'T035 N035 Q003 G043 E016', "Ptah": 'Q003 X001 V028', "Heket": 'V028 X001 X007 A041', "Sebek or Sobek": 'S029 D058 V031', "Ra or Re": 'D021 D036 N005',
         "Seker or Soker": 'O034 V031 D021',
         "raise": 'A009 G001 I009',"work":'A009 X001 D028',"load":'A009 Q003 V013 G001',"raise":'A009 A024',"load":'A009 D036',
@@ -41,8 +41,11 @@ def dictionary_matching(top1):
         "Well to do person, King of the birds":'I002 Z002 G039 Z003',"Throat":'I002 Z002 X001 F051B I001',"Garrulous, Chattering":'I002 Z002 P008 G043 A002',
         "Official":'A021 D021 S029',"Courtier":'A021 X001 V001 W024 N035 V007',"Friend":'A021 S029 G017 T034 N035 AA001',"Statue":'A021 U033 D033 N035',
         "Courtiers":'I002 A001 Z002 A021 X001 V001 W024 N035 V007',
-        "Herdsman":'A024 G043 D040',"Combat":'A024 N035 Z004 D021 D002 Z001',"Ship part":'A024 Z007 M017 K001 K001 N035 Z007 Z003A'
-    }
+        "Herdsman":'A024 G043 D040',"Combat":'A024 N035 Z004 D021 D002 Z001',"Ship part":'A024 Z007 M017 K001 K001 N035 Z007 Z003A',
+        "Beat, srike, smite": 'A025',"Utterance, recitation":'A025 N023 N035 Z001',"Re or Ra":'C002',"Seth":'C007',"Truth, righteousness,justice, right doing ":'C010',
+        "Heh (section of a phyle)":'C011',"Millions, a great number":'C011 C011 C011', "Innumerable":'C011 Z001 Z003', "Millions, a great number":'C011 Z001 Z007 Z004 Z003',
+        "A type of wine":'G051 W051', "To tear asunder":'G051 AA015 G051 AA015 Z009 D040',"Capable":'G051 AA015 Y001 D046 X001 Z001',
+        }
     
     # match_ratios = process.extract(top1, str_list, scorer=fuzz.token_sort_ratio)
     # print(match_ratios)

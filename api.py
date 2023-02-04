@@ -21,8 +21,8 @@ def predict():
     if(request.method == 'POST'):
         imageFile = request.files['image']
         filename = werkzeug.utils.secure_filename(imageFile.filename)
-        imageFile.save("../Kemet/uploadedImages/" + filename)
-        input_image = Image.open("../Kemet/uploadedImages/" + filename).convert('RGB')
+        imageFile.save("../Aegyptos/uploadedImages/" + filename)
+        input_image = Image.open("../Aegyptos/uploadedImages/" + filename).convert('RGB')
         preprocess = transforms.Compose([
         transforms.Resize(256),
         transforms.CenterCrop(224),
