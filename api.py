@@ -51,7 +51,9 @@ def predict():
     translate=translator.translate(matchingText,dest='arabic')
     matchingTranslation = translate.text
     
-    return jsonify({'prediction': matchingText,'translation': matchingTranslation})
+    matchingTextPronunciation=ma.dictionary_matching_pronunciation(top1)
+    
+    return jsonify({'prediction': matchingText,'gardinerCode':matchingTextPronunciation,'translation': matchingTranslation})
 
 
 if __name__ == '__main__':
