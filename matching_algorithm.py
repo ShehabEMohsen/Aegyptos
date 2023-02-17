@@ -1,12 +1,13 @@
 from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
 
+##############PREDICTION#######################
 def dictionary_matching(top1):
     str_list = {
         "Mouth": 'D021', "House": 'O001', "Man and his occupation": 'A001',
         "King": 'A040', "Soker (The god)": 'O004 V031 D021 A040',
         "Sun": 'N005', "Day": 'O004 D021 G001 N005',
-        "Motion": 'D054', "Send": 'O004 G001 D058 D054',
+        "Motion": 'D054', "Send": 'O004 G001 D058 D054',"walk":'O001 D054 D021',
         "Small bird used for bad,weak, or little things": 'G037', "Bad,evil": 'D058 T035 G037A N035',
         "Ton,Village": 'O049', "Qis (Place-name)": 'X007 T035 S029 O049',
         "Eating,speaking or Metaphorically (emotions,attitude,thinking)": 'A002', "Call out": 'T035 S029 N035 A002', "Recount": 'S029 D046 I010 A002', 
@@ -15,8 +16,8 @@ def dictionary_matching(top1):
         "Infantry": 'Y005 N035 I009 G001 X001 A012 Z003', "Army": 'G017 D036 N037 A012 Z003', "Army": 'A012 Z003',
         "Women": 'O034 X001 B001', "Women, Wife": 'N042 X001 B001', "Goddess": 'T007A X001 D021 X001 B001', "Daughter": 'X001 G039 B001', "Slave": 'O029A X001 B001', 
         "Widow": 'K005 G001 X001 D021 D003 B001',
-        "Hair": 'V007 N035 Z004 D003', "Grey-haired": 'S029 O040 G017 D003', "Complexion":
-        'T035 N035 E034 D003', "Skin": 'T035 N035 K001 T034 G017 D003', 
+        "Hair": 'V007 N035 Z004 D003', "Grey-haired": 'S029 O040 G017 D003', "Complexion":'T035 N035 E034 D003',
+        "Skin": 'T035 N035 K001 T034 G017 D003', 
         "Mourn": 'M017 G001 V031 D058 D003', "Widow": 'K005,G001,X001,D021,D003,B001', "Fall out (of hair)": 'G043 D003 N037',
         "Found defective (of text)": 'G028 D003',"Look": 'V007 N035 Z004 D003', "Blind": 'N037 Q003 D005', "Blind": 'N037 Q003 D004',
         "Wakeful": 'N037 Q003 D005', "Wakeful": 'N037 Q003 D004',
@@ -69,5 +70,21 @@ def dictionary_matching(top1):
 
     # print(key_list[ind])
     return key_list[ind]
+
+
+##############PRONUNCIATION#######################
+def dictionary_matching_pronunciation(top1):
+    str_list_pronunce={
+        'پري':"D021",'پر':"O001"
+    }
+    
+    key_list=list(str_list_pronunce.keys())
+    val_list=list(str_list_pronunce.values())
+    ind=val_list.index(top1)
+    key_list[ind]
+
+    # print(key_list[ind])
+    return key_list[ind]
+    
 
 
