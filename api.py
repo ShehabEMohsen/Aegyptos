@@ -7,6 +7,7 @@ from PIL import Image
 from PIL import ImageFile
 import werkzeug
 import matching_algorithm as ma
+import matching_algorithm_pronunciation as pronunciation
 import googletrans
 from googletrans import *
 
@@ -51,9 +52,9 @@ def predict():
     translate=translator.translate(matchingText,dest='arabic')
     matchingTranslation = translate.text
     
-    matchingTextPronunciation=ma.dictionary_matching_pronunciation(top1)
-    
-    return jsonify({'prediction': matchingText,'gardinerCode':matchingTextPronunciation,'translation': matchingTranslation})
+    matchingTextPronunciation=pronunciation.dictionary_matching_pronunciation(top1)
+        
+    return jsonify({'prediction': matchingText,'translation': matchingTranslation,'gardinerCodePronunciation':matchingTextPronunciation})
 
 
 if __name__ == '__main__':

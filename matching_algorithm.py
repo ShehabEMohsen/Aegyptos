@@ -7,7 +7,7 @@ def dictionary_matching(top1):
         "Mouth": 'D021', "House": 'O001', "Man and his occupation": 'A001',
         "King": 'A040', "Soker (The god)": 'O004 V031 D021 A040',
         "Sun": 'N005', "Day": 'O004 D021 G001 N005',
-        "Motion": 'D054', "Send": 'O004 G001 D058 D054',"walk":'O001 D054 D021',
+        "Motion": 'D054', "Send": 'O004 G001 D058 D054',"walk":'O001 D021 D054',"winter season":'O001 D021 X001 N005',
         "Small bird used for bad,weak, or little things": 'G037', "Bad,evil": 'D058 T035 G037A N035',
         "Ton,Village": 'O049', "Qis (Place-name)": 'X007 T035 S029 O049',
         "Eating,speaking or Metaphorically (emotions,attitude,thinking)": 'A002', "Call out": 'T035 S029 N035 A002', "Recount": 'S029 D046 I010 A002', 
@@ -68,22 +68,7 @@ def dictionary_matching(top1):
     ind=val_list.index(top1)
     key_list[ind]
 
-    # print(key_list[ind])
-    return key_list[ind]
 
-
-##############PRONUNCIATION#######################
-def dictionary_matching_pronunciation(top1):
-    str_list_pronunce={
-        'پري':"D021",'پر':"O001"
-    }
-    
-    key_list=list(str_list_pronunce.keys())
-    val_list=list(str_list_pronunce.values())
-    ind=val_list.index(top1)
-    key_list[ind]
-
-    # print(key_list[ind])
     return key_list[ind]
     
 
