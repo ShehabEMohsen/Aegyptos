@@ -10,19 +10,55 @@ import matching_algorithm as ma
 import matching_algorithm_pronunciation as pronunciation
 import googletrans
 from googletrans import *
+import cv2
+from imutils import contours
+from skimage.filters import threshold_otsu
 
 app = Flask(__name__)
 
 # load pkl model
 model = pickle.load(open("squeezenetuntrained.pkl", "rb"))
 
+def Otsu(myImage):
+  sample_image = cv2.imread(myImage)
+  img = cv2.cvtColor(sample_image,cv2.COLOR_BGR2RGB)
+
+  # plt.axis('off')
+  # plt.imshow(img)
+
+  img_gray=cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+
+  thresh = threshold_otsu(img_gray)
+  img_otsu  = img_gray < thresh
+
+  # plt.imshow(img_otsu)
+
+  filtered = filter_image(img, img_otsu)
+  filteredBW=cv2.cvtColor(filtered,cv2.COLOR_RGB2GRAY)
+  return filteredBW
+
+
+
+def filter_image(image, mask):
+
+    r = image[:,:,0] * mask
+    g = image[:,:,1] * mask
+    b = image[:,:,2] * mask
+
+    return np.dstack([r,g,b])
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if(request.method == 'POST'):
+        
         imageFile = request.files['image']
         filename = werkzeug.utils.secure_filename(imageFile.filename)
         imageFile.save(filename)
-        input_image = Image.open(filename).convert('RGB')
+        image = Otsu(filename)
+        cv2.imwrite('segmented_image.png', image)
+        input_image = Image.open('segmented_image.png').convert('RGB')
+
         preprocess = transforms.Compose([
         transforms.Resize(256),
         transforms.CenterCrop(224),
@@ -55,6 +91,7 @@ def predict():
     matchingTextPronunciation=pronunciation.dictionary_matching_pronunciation(top1)
         
     return jsonify({'prediction': matchingText,'translation': matchingTranslation,'gardinerCodePronunciation':matchingTextPronunciation})
+
 
 
 if __name__ == '__main__':
