@@ -68,6 +68,7 @@ def dictionary_matching(top1):
 
     best_match = process.extractOne(top1, str_list, scorer=fuzz.token_sort_ratio)
     print(best_match)
+    # print("best match2"+ best_match[2])
 
     key_list=list(str_list.keys())
     val_list=list(str_list.values())
@@ -88,10 +89,12 @@ def dictionary_matching(top1):
         
     
     result = any(any(top1 in s for s in subList) for subList in str_list.values())
-    # print(result)
+    print("result", result)
+    print("answer", ans)
+    # max_key = max(d, key=lambda k: d[k])
 
-
-    return ans, result
+    return best_match[2]
+    # return ans,result
 # print(dictionary_matching('O004'))
 
 

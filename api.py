@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
@@ -48,8 +49,11 @@ image_array = []
 #     b = image[:,:,2] * mask
 
 #     return np.dstack([r,g,b])
-
+# global deleteCounterImage
+# deleteCounterImage=0
 def cropping(myImage):
+    global deleteCounterImage 
+    deleteCounterImage = 0  # default value
     # Load the YOLOv3 network
     net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
 
@@ -72,6 +76,7 @@ def cropping(myImage):
 
     # Iterate over the contours
     for i, contour in enumerate(contours):
+        deleteCounterImage=deleteCounterImage+1
         # Get bounding box coordinates
         x, y, w, h = cv2.boundingRect(contour)
 
@@ -154,27 +159,64 @@ def cropping(myImage):
 
         # Resize the image
         resized_image = cv2.resize(image, (new_width, new_height))
-
-        # Create a new blank image with the desired output size
-        new_image = np.zeros((output_size, output_size, 3), np.uint8)
-        new_image[:, :] = (255, 255, 255)  # fill with black pixels
-
+        
         # Calculate the coordinates to copy the resized image onto the new image
         x_offset = int((output_size - new_width) / 2)
         y_offset = int((output_size - new_height) / 2)
 
-        # Copy the resized image onto the new image with black pixels
-        new_image[y_offset:y_offset+new_height, x_offset:x_offset+new_width] = resized_image
+        # Save the resized image to a file
+        cv2.imwrite(f"resize{i}.png", resized_image)
+
+        # Load the resized image from file
+        resized_image = cv2.imread(f"resize{i}.png")
+
+        # Convert the image to grayscale
+        gray = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
+
+        # Apply Otsu's thresholding method to get a binary image
+        thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU + cv2.THRESH_BINARY)[1]
+
+        # Invert the binary image
+        inv = cv2.bitwise_not(thresh)
+
+        # Save the segmented image to a file
+        cv2.imwrite(f"seg_img{i}.png", inv)
+
+        # Load the segmented image from file
+        seg_img = cv2.imread(f"seg_img{i}.png")
+
+        # Create a new blank image with the desired output size
+        new_image = np.zeros((output_size, output_size, 3), np.uint8)
+        new_image[:, :] = (0, 0, 0)  # fill with black pixels
+
+        # Copy the segmented image onto the new image with black pixels
+        new_image[y_offset:y_offset+new_height, x_offset:x_offset+new_width] = seg_img
 
         # Save the final image to a file
-        cv2.imwrite(f"resize{i}.png", new_image)
+        cv2.imwrite(f"final{i}.png", new_image)
 
-        image = cv2.imread(f"resize{i}.png")
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        thresh = cv2.threshold(gray,0,255,cv2.THRESH_OTSU + cv2.THRESH_BINARY)[1]
-        inv = cv2.bitwise_not(thresh)
-        seg_img = cv2.imwrite(f"seg_img{i}.png", inv)
-        image_array.append(seg_img)
+        image_array.append(new_image)
+
+        # # Create a new blank image with the desired output size
+        # new_image = np.zeros((output_size, output_size, 3), np.uint8)
+        # new_image[:, :] = (255, 255, 255)  # fill with black pixels
+
+        # # Calculate the coordinates to copy the resized image onto the new image
+        # x_offset = int((output_size - new_width) / 2)
+        # y_offset = int((output_size - new_height) / 2)
+
+        # # Copy the resized image onto the new image with black pixels
+        # new_image[y_offset:y_offset+new_height, x_offset:x_offset+new_width] = resized_image
+
+        # # Save the final image to a file
+        # cv2.imwrite(f"resize{i}.png", new_image)
+
+        # image = cv2.imread(f"resize{i}.png")
+        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # thresh = cv2.threshold(gray,0,255,cv2.THRESH_OTSU + cv2.THRESH_BINARY)[1]
+        # inv = cv2.bitwise_not(thresh)
+        # seg_img = cv2.imwrite(f"seg_img{i}.png", inv)
+        # image_array.append(seg_img)
 
 
 
@@ -187,10 +229,10 @@ def predict():
         imageFile.save(filename)
         cropping(filename)
         results = ""
-        for i in range(len(image_array)):
+        for i in range(deleteCounterImage):
             # cv2.imwrite('segmented_image.png', image)
             # input_image = Image.open('segmented_image.png').convert('RGB')
-            input_image = Image.open(f'seg_img{i}.png').convert('RGB')
+            input_image = Image.open(f'final{i}.png').convert('RGB')
 
             preprocess = transforms.Compose([
                 transforms.Resize(256),
@@ -239,6 +281,20 @@ def predict():
         matchingTranslation = translate.text
         
         matchingTextPronunciation=pronunciation.dictionary_matching_pronunciation(updated_results)
+        
+        os.remove(filename)
+        for i in range(deleteCounterImage):
+            removeCrop = f"crop_{i}.png"
+            removeSegImg = f"seg_img{i}.png"
+            removeFinal = f"final{i}.png"
+            removeResize = f"resize{i}.png"
+            try:
+                os.remove(removeCrop)
+                os.remove(removeSegImg)
+                os.remove(removeFinal)
+                os.remove(removeResize)
+            except FileNotFoundError:
+                pass
             
         return jsonify({'prediction': matchingText,'translation': matchingTranslation,'gardinerCodePronunciation':matchingTextPronunciation})
 
