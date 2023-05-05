@@ -15,6 +15,9 @@ from googletrans import *
 import cv2
 from imutils import contours
 from skimage.filters import threshold_otsu
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -140,8 +143,9 @@ def cropping(myImage):
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    
     if(request.method == 'POST'):
-        
+        print("Test1")
         imageFile = request.files['image']
         filename = werkzeug.utils.secure_filename(imageFile.filename)
         imageFile.save(filename)
@@ -214,10 +218,12 @@ def predict():
                 os.remove(removeResize)
             except FileNotFoundError:
                 pass
-            
+
+        print("Test2")    
         return jsonify({'prediction': matchingText,'translation': matchingTranslation,'gardinerCodePronunciation':matchingTextPronunciation})
 
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000,debug=True)
+    app.run(host='0.0.0.0', port=os.getenv("PORT"),debug=True)
+    print("Server is running")
