@@ -61,6 +61,10 @@ def cropping(myImage):
     # Perform blob analysis
     contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+    # Sort contours from top to bottom and left to right
+    contours = sorted(contours, key=lambda c: (cv2.boundingRect(c)[0], cv2.boundingRect(c)[0]))
+
+
     # Iterate over the contours
     for i, contour in enumerate(contours):
         # deleteCounterImage = deleteCounterImage+1
@@ -226,4 +230,5 @@ def predict():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=os.getenv("PORT"),debug=True)
+    # app.run(host='0.0.0.0', port=8000,debug=True)
     print("Server is running")
