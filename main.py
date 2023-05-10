@@ -16,6 +16,7 @@ import cv2
 from imutils import contours
 from skimage.filters import threshold_otsu
 from dotenv import load_dotenv
+import search_dictionary as search
 
 load_dotenv()
 
@@ -226,9 +227,16 @@ def predict():
         print("Test2")    
         return jsonify({'prediction': matchingText,'translation': matchingTranslation,'gardinerCodePronunciation':matchingTextPronunciation})
 
-
+@app.route('/search',methods=['POST'])
+def searchFunc():
+    text = request.form.get('text')
+    searchRes=search.search(text)
+    print(text)
+    print(searchRes)
+    return jsonify({'searchResult': searchRes})
+    
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=os.getenv("PORT"),debug=True)
-    # app.run(host='0.0.0.0', port=8000,debug=True)
+    # app.run(host='0.0.0.0', port=os.getenv("PORT"),debug=True)
+    app.run(host='0.0.0.0', port=8000,debug=True)
     print("Server is running")
