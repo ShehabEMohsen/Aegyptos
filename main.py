@@ -27,7 +27,7 @@ model = pickle.load(open("new squeezenet(finetuned).pkl", "rb"))
 
 image_array = []
 
-def cropping(myImage):
+def cropping(myImage,uploadOrCamera):
     global deleteCounterImage 
     deleteCounterImage = 0
 
@@ -38,38 +38,49 @@ def cropping(myImage):
     # Load the input image
     image = cv2.imread(myImage)
     
-    ######
-    hh, ww = image.shape[:2]
-    print(hh, ww)
-    max_dim = max(hh, ww)
+    #####
+    print("uploadOrCamera: ",uploadOrCamera)
+    if uploadOrCamera == "true":
+        # hh, ww = image.shape[:2]
+        # print(hh, ww)
+        # max_dim = max(hh, ww)
 
-    # illumination normalize
-    ycrcb = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
+        # # illumination normalize
+        # ycrcb = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
 
-    # separate channels
-    y, cr, cb = cv2.split(ycrcb)
+        # # separate channels
+        # y, cr, cb = cv2.split(ycrcb)
 
-    # get background which paper says (gaussian blur using standard deviation 5 pixel for 300x300 size image)
-    # account for size of input vs 300
-    sigma = int(5 * max_dim / 300)
-    print('sigma: ',sigma)
-    gaussian = cv2.GaussianBlur(y, (0, 0), sigma, sigma)
+        # # get background which paper says (gaussian blur using standard deviation 5 pixel for 300x300 size image)
+        # # account for size of input vs 300
+        # sigma = int(5 * max_dim / 300)
+        # print('sigma: ',sigma)
+        # gaussian = cv2.GaussianBlur(y, (0, 0), sigma, sigma)
 
-    # subtract background from Y channel
-    y = (y - gaussian + 100)
+        # # subtract background from Y channel
+        # y = (y - gaussian + 100)
 
-    # merge channels back
-    ycrcb = cv2.merge([y, cr, cb])
+        # # merge channels back
+        # ycrcb = cv2.merge([y, cr, cb])
 
-    #convert to BGR
-    output = cv2.cvtColor(ycrcb, cv2.COLOR_YCrCb2BGR)
+        # #convert to BGR
+        # output = cv2.cvtColor(ycrcb, cv2.COLOR_YCrCb2BGR)
 
-    # save results
-    cv2.imwrite('normalization.png', output)
-    ######
+        # # save results
+        # cv2.imwrite('normalization.png', output)
+        # gray = cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
+        # pass
+        
+        # img = cv2.fastNlMeansDenoisingColored(image,None,10,10,7,21) 
+        # img = cv2.medianBlur(image, 5)
+        gray2 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        gray = cv2.fastNlMeansDenoising(gray2, None, 10, 7, 30) 
+        
+        
 
-    # Convert image to grayscale
-    gray = cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
+    else:
+        # Convert image to grayscale
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Threshold image
     _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
@@ -182,9 +193,10 @@ def predict():
     if(request.method == 'POST'):
         print("Test1")
         imageFile = request.files['image']
+        uploadOrCamera = request.form.get('uploadOrCamera')
         filename = werkzeug.utils.secure_filename(imageFile.filename)
         imageFile.save(filename)
-        cropping(filename)
+        cropping(filename,uploadOrCamera)
         results = ""
         for i in range(deleteCounterImage):
             # cv2.imwrite('segmented_image.png', image)
