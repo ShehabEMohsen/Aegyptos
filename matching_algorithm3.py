@@ -4,7 +4,7 @@ from fuzzywuzzy import fuzz
 str_list0={
         "Mouth": ['D021'],"House": ['O001'],"Man and his occupation": ['A001'],"King": ['A040'],"Sun": ['N005'],"Motion": ['D054'],
         "Small bird used for bad,weak, or little things": ['G037'],"Ton,Village": ['O049'],
-        "Eating,speaking or Metaphorically (emotions,attitude,thinking)": ['A002'],"Widow": ['K005,G001,X001,D021,D003,B001'],
+        "Eating,speaking or Metaphorically (emotions,attitude,thinking)": ['A002'],
         "king of Upper Egypt": ['M023'],"King's adviser, Royal intimate": ['M024'],"Vulture": ['G001'],"Beat, srike, smite": ['A025'],
         "Re or Ra": ['C002'],"Seth": ['C007'],"Truth, righteousness,justice, right doing" : ['C010'],"Heh (section of a phyle)": ['C011'],
         "Daughter, daughter in law, granddaughter": ['Q001'],"Lion, lion shaped image (of king), sphinx": ['E022'],"Master, Lord": ['E023'],
@@ -57,7 +57,7 @@ str_list4={
 
 str_list5={
         "Skin": ['T035 N035 K001 T034 G017 D003'],"Foreigner": ['G001 D036 D036 F018 A002 A001'],"Courtier": ['A021 X001 V001 W024 N035 V007'],
-        "Friend": ['A021 S029 G017 T034 N035 AA001'],"Combat": ['A024 N035 Z004 D021 D002 Z001'],
+        "Friend": ['A021 S029 G017 T034 N035 AA001'],"Combat": ['A024 N035 Z004 D021 D002 Z001'],"Widow": ['K005 G001 X001 D021 D003 B001'],
         "To tear asunder": ['G051 AA015 G051 AA015 Z009 D040'],"Capable": ['G051 AA015 Y001 D046 X001 Z001'],
         "Double throne": ['Q001 G043 X001 X001 O001 Z003A'],"Court of law, hall, gateway, waiting place": ['E023 M017 M017 X001 D021 O001']
 }
