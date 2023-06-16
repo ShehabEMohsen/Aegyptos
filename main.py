@@ -17,6 +17,8 @@ from imutils import contours
 from skimage.filters import threshold_otsu
 from dotenv import load_dotenv
 import search_dictionary as search
+import re
+
 
 load_dotenv()
 

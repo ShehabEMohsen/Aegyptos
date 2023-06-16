@@ -1,5 +1,7 @@
 from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
+import re
+
 
 search_list={
 	"mouth": '𓂋', "house": '𓉐', "man ans his occupation": '𓀀',"king": '𓀭',
@@ -53,40 +55,63 @@ search_list={
         "court of law, hall, gateway, waiting place": '𓃭 𓇋 𓇋 𓏏 𓂋 𓉐',"selket": '𓆫',"selket, scorpion": '𓆫 𓏏',
         "to hinder": '𓍲 𓂝',"court, royal household": '𓍲 𓀙 𓇋 𓇋 𓏥',"breast, chest, upper body": '𓍲 𓃀 𓏏 𓄹'
 }
-def search(top1):
-    # temp=[]
-    # temp.append(top1)
-    # if isinstance(top1,list):
-    #     temp=top1
-    #     top1 = top1[0]
-    new_dict=lower_dict(search_list)
-    # match_ratios = process.extract(top1, new_dict, scorer=fuzz.token_sort_ratio)
-    # print(match_ratios)
+# def search(top1):
+#     # temp=[]
+#     # temp.append(top1)
+#     # if isinstance(top1,list):
+#     #     temp=top1
+#     #     top1 = top1[0]
+#     new_dict=lower_dict(search_list)
+#     # match_ratios = process.extract(top1, new_dict, scorer=fuzz.token_sort_ratio)
+#     # print(match_ratios)
 
-    # best_match = process.extractOne(top1, new_dict, scorer=fuzz.token_sort_ratio)
-    # print(best_match)
-    # print("best match2"+ best_match[2])
+#     # best_match = process.extractOne(top1, new_dict, scorer=fuzz.token_sort_ratio)
+#     # print(best_match)
+#     # print("best match2"+ best_match[2])
 
-    key_list=list(new_dict.keys())
-    val_list=list(new_dict.values())
+#     key_list=list(new_dict.keys())
+#     val_list=list(new_dict.values())
     
-    if top1.lower() in key_list:
+#     if top1.lower() in key_list:
 
-        ind=key_list.index(top1.lower())
-        ans = val_list[ind]
-    else:
-        ans = "-"
-        print ("temp ="+str(top1))
+#         ind=key_list.index(top1.lower())
+#         ans = val_list[ind]
+#     else:
+#         ans = "-"
+#         print ("temp ="+str(top1))
         
         
     
-    result = any(any(top1 in s for s in subList) for subList in new_dict.keys())
-    # print("result", result)
-    # print("answer", ans)
-    # max_key = max(d, key=lambda k: d[k])
+#     result = any(any(top1 in s for s in subList) for subList in new_dict.keys())
+#     # print("result", result)
+#     # print("answer", ans)
+#     # max_key = max(d, key=lambda k: d[k])
 
-    return ans
+#     return ans
+############################################################################################
+# def search(word):
+#     new_dict = lower_dict(search_list)
+#     result = {}
+    
+#     for key, value in new_dict.items():
+#         if word.lower() in key:
+#             result[key] = value
+    
+#     return result
+############################################################################################
+
+def search(word):
+    new_dict = lower_dict(search_list)
+    result = {}
+    pattern = r"\b{}\b".format(re.escape(word.lower()))
+    resultList=[]
+    for key, value in new_dict.items():
+        if re.search(pattern, key):
+            result[key] = value
+            resultList.append({key:value})
+    return resultList
+############################################################################################
 def lower_dict(d):
    new_dict = dict((k.lower(), v) for k, v in d.items())
    return new_dict
-print(search("House"))
+# print(search("King"))
