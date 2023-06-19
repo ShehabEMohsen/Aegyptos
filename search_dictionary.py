@@ -4,8 +4,8 @@ import re
 
 
 search_list={
-	"mouth": '𓂋', "house": '𓉐', "man ans his occupation": '𓀀',"king": '𓀭',
-	"soker (the god)":'𓉔 𓎡 𓂋 𓀭', "sun": '𓇳',"day": '𓉔 𓂋 𓄿 𓇳',
+	"mouth": '𓂋', "house": '𓉐', "man ans his occupation": '𓀀',"king": '𓀭',"backward motion":'𓂽',"Hare":'𓃹',
+	"soker (the god)":'𓉔 𓎡 𓂋 𓀭', "sun": '𓇳',"day": '𓉔 𓂋 𓄿 𓇳',"owl": '𓅓', "morning": '𓇼',"Folded cloth":'𓋴',"Water ripple":'𓈖',
         "motion": '𓂻', "send": '𓉔 𓄿 𓃀 𓂻',"walk": '𓉐 𓂋 𓂻',"winter season": '𓉐 𓂋 𓏏 𓇳',
         "small bird used for bad,weak, or little things": '𓅪', "bad,evil": '𓃀 𓌱 𓅫 𓈖',
         "ton,village": '𓊖', "qis (place-name)":  '𓏘 𓌱 𓋴 𓊖',
