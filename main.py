@@ -194,7 +194,7 @@ def predict():
         cropping(filename,uploadOrCamera)
         results = ""
         ########################################################################################
-        if is_black_and_white(image):
+        if is_black_and_white(image) or uploadOrCamera == "true":
             for i in range(deleteCounterImage):
                 
                 input_image = Image.open(f'final{i}.png').convert('RGB')
